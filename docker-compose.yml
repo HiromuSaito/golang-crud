@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: "./docker/golang/Dockerfile"
+    ports:
+      - "8080:8080"
+    container_name: api
+    depends_on:
+      - mysql
+    volumes:
+      - ./:/go/src/github.com/hiromu-saito/golang-crud
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: db
+    tty: true
+
+  mysql:
+    image: mysql:5.7.22
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: db
+    ports:
+      - "3306:3306"
+    container_name: mysql
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
