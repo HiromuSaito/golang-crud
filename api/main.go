@@ -10,6 +10,8 @@ import (
 
 func main() {
 	log.Println("application start!")
+	//テスト用
+	http.HandleFunc("/test", handleAllTestRequest)
 	http.HandleFunc("/users", handleAllUserRequest)
 	http.Handle("/users/", http.StripPrefix("/users/", http.HandlerFunc(handleSingleUserRequest)))
 
@@ -17,6 +19,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+//テスト用
+func handleAllTestRequest(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("hello"))
+	w.WriteHeader(http.StatusOK)
 }
 
 func handleAllUserRequest(w http.ResponseWriter, r *http.Request) {

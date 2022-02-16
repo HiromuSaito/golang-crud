@@ -16,6 +16,7 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: db
+      MYSQL_HOST: mysql
     tty: true
 
   mysql:
